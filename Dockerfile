@@ -11,6 +11,12 @@ ENV PYTHONUNBUFFERED 1
 COPY requirements.txt requirements.txt
 RUN pip install -r requirements.txt
 
+# Create a new user and set a password
+RUN useradd -m -s /bin/bash myuser && echo "myuser:mypassword" | chpasswd
+
+# Optionally, add the user to the sudo group (if needed)
+RUN usermod -aG sudo myuser
+
 # copy project
 COPY . /app/
 
